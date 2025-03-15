@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <cstring>
+#include <ctime>
 
 using namespace std;
 
@@ -10,7 +11,7 @@ using namespace std;
     #define CLEAR "clear"
 #endif
 
-void obterPalavra(char palavras[][30], char palavra[])
+void obterPalavra(char palavras[20][30], char palavra[])
 {
 	int aleatorio = rand() % 20;
 
@@ -23,7 +24,7 @@ void iniciarSecreta(char secreta[], char palavra[])
 	int tamanho = strlen(palavra);
 	for (i = 0; i < tamanho; i++)
 	{
-		secreta[i] = '_';
+		secreta[i] = '-';
 	}
 
 	secreta[tamanho] = '\0';
@@ -56,7 +57,7 @@ bool comparar(char secreta[], char palavra[], char letra, int *acertos, int *cha
 	{
 		if (palavra[i] == letra)
 		{
-			if (secreta[i] == '_')
+			if (secreta[i] == '-')
 			{
 				*acertos = *acertos + 1;
 			}
@@ -76,6 +77,8 @@ bool comparar(char secreta[], char palavra[], char letra, int *acertos, int *cha
 
 int main()
 {
+	srand(time(NULL));
+
 	char palavras[20][30] = {
 		"abacaxi",
 		"travesseiro",
@@ -103,15 +106,17 @@ int main()
 	char palavra[30], secreta[30], letra;
 	int chances = 0;
 	int acertos = 0;
+	int tamanho = 0;
 
 	obterPalavra(palavras, palavra);
 	iniciarSecreta(secreta, palavra);
+	tamanho = strlen(palavra);
 
 	while (true)
 	{
 		system(CLEAR);
 		cout << boneco << endl;
-		printf("\nPalavra: %s \n", secreta);
+		printf("\nPalavra(%d): %s \n", tamanho, secreta);
 		tentativa(&letra);
 
 		if (!comparar(secreta, palavra, letra, &acertos, &chances))
@@ -126,10 +131,11 @@ int main()
 			return 0;
 		}
 
-		if (chances == 7)
+		if (chances == 6)
 		{
 			system(CLEAR);
-			printf("Suas chances acabaram :( \nA palavra era: %s\n", palavra);
+			cout << boneco << endl;
+			printf("\nSuas chances acabaram :( \nA palavra era: %s\n", palavra);
 			return 0;
 		}
 	}
