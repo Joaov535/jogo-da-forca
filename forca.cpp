@@ -12,7 +12,6 @@ using namespace std;
 
 void obterPalavra(char palavras[][30], char palavra[])
 {
-	srand(time(NULL));
 	int aleatorio = rand() % 20;
 
 	strcpy(palavra, palavras[aleatorio]);
